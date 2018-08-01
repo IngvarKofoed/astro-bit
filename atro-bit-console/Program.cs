@@ -244,19 +244,14 @@ namespace atro_bit_console
             var factorT = dateTime.ToFactorT();
             
             var siderealTimeGreenwich = 100.46061837 + 36000.770053608 * factorT + 0.000387933 * factorT * factorT - ((factorT * factorT * factorT) / 38710000.0);
+            siderealTimeGreenwich = siderealTimeGreenwich.Truncate(360);
 
-            // TODO: Use truncate
-            siderealTimeGreenwich -= ((int)siderealTimeGreenwich / 360) * 360; // st0 is in decimal degrees [0 - 360)
             // TODO: Make extension for this
             siderealTimeGreenwich /= 15.0; // st0 is in decimal hours
 
-            var siderealTime = dateTime.ToDecimalHours() * 1.00273790935 + siderealTimeGreenwich;
-            // TODO: Use truncate
-            siderealTime -= ((int)siderealTime / 24) * 24; // siderealTime is in decimal hours [0 - 24)
+            var siderealTime = (dateTime.ToDecimalHours() * 1.00273790935 + siderealTimeGreenwich).Truncate(24);
 
-            var correctedSiderealTime = siderealTime + longitude.ToDegrees() / 15.0; // TODO: Make extension for this 
-            // TODO: Use truncate
-            correctedSiderealTime -= ((int)correctedSiderealTime / 24) * 24; // correctedSiderealTime is in decimal hours [0 - 24)
+            var correctedSiderealTime = (siderealTime + longitude.ToDegrees() / 15.0).Truncate(24); // TODO: Make extension for this 
 
             return correctedSiderealTime;
         }
@@ -507,15 +502,20 @@ namespace atro_bit_console
             Console.OutputEncoding = Encoding.UTF8;
             File.WriteAllText("output.txt", "");
 
-            // Martin
-            var birthDate = new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc); // Must be UTC with out DST
-            var birthLongitude = new Longitude(9, 34, 0, LongitudeDirection.East);
-            var birthLatitude = new Latitude(56, 10, 0, LatitudeDirection.North);
+            //// Martin
+            //var birthDate = new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc); // Must be UTC with out DST
+            //var birthLongitude = new Longitude(9, 34, 0, LongitudeDirection.East);
+            //var birthLatitude = new Latitude(56, 10, 0, LatitudeDirection.North);
 
             //// Bastian
             //var birthDate = new DateTime(2007, 9, 3, 23, 0, 0, DateTimeKind.Utc); // Must be UTC with out DST
             //var birthLongitude = new Longitude(12, 35, 0, LongitudeDirection.East);
             //var birthLatitude = new Latitude(55, 40, 0, LatitudeDirection.North);
+
+            // Louise
+            var birthDate = new DateTime(1968, 4, 26, 8, 45, 0, DateTimeKind.Utc); // Must be UTC with out DST
+            var birthLongitude = new Longitude(9, 56, 0, LongitudeDirection.East);
+            var birthLatitude = new Latitude(57, 3, 0, LatitudeDirection.North);
 
             //var birthDate = new DateTime(2016, 11, 2, 21, 17, 30);
             //var birthLongitude = new Longitude(6, 54, 0, LongitudeDirection.East);
