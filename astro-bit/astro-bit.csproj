@@ -5,4 +5,23 @@
     <RootNamespace>AstroBit</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>c:\TFS\astro-bit\astro-bit\astro-bit.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <CodeAnalysisRuleSet>astro-bit.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>c:\TFS\astro-bit\astro-bit\astro-bit.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <CodeAnalysisRuleSet>astro-bit.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
