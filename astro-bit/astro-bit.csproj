@@ -6,15 +6,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>c:\TFS\astro-bit\astro-bit\astro-bit.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.0\astro-bit.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
     <CodeAnalysisRuleSet>astro-bit.ruleset</CodeAnalysisRuleSet>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>c:\TFS\astro-bit\astro-bit\astro-bit.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netcoreapp2.0\netcoreapp2.0\astro-bit.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
     <CodeAnalysisRuleSet>astro-bit.ruleset</CodeAnalysisRuleSet>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
