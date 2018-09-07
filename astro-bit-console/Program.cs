@@ -9,56 +9,14 @@ using System.Text;
 using System.Globalization;
 using AstroBit.Ephemeris.Providers.Horizons.Telnet;
 using System.Diagnostics;
+using AstroBit;
+using AstroBit.Math;
 
 namespace atro_bit_console
 {
     // TODO: Make types for decimal hours, degrees, sidereal, MC, AC so that they do not get mixed
 
-    [DebuggerDisplay("{ToString()}")]
-    public class Arc
-    {
-        public Arc(int degrees, int minutes, int seconds)
-        {
-            Degrees = degrees;
-            Minutes = minutes;
-            Seconds = seconds;
-        }
-
-        public int Degrees { get; }
-
-        public int Minutes { get; }
-
-        // TODO: Should be doubles, check all usages, especially prints
-        public int Seconds { get; }
-
-        public override string ToString() =>
-            $"{Degrees}°{Minutes}'{Seconds}\"";
-    }
-
-    public enum LongitudeDirection
-    {
-        East,
-        West
-    }
-
-    public class Longitude : Arc
-    {
-        public Longitude(int degrees, int minutes, int seconds, LongitudeDirection direction) :
-            base(degrees, minutes, seconds)
-        {
-            Direction = direction;
-        }
-
-        public Longitude(Arc arc, LongitudeDirection direction) :
-            this(arc.Degrees, arc.Minutes, arc.Seconds, direction)
-        {
-        }
-
-        public LongitudeDirection Direction { get; }
-
-        public override string ToString() =>
-            $"{base.ToString()}{Direction.ToString()[0]}";
-    }
+    
 
 
     public enum LatitudeDirection
@@ -70,7 +28,7 @@ namespace atro_bit_console
 
     public class Latitude : Arc
     {
-        public Latitude(int degrees, int minutes, int seconds, LatitudeDirection direction) :
+        public Latitude(int degrees, int minutes, double seconds, LatitudeDirection direction) :
             base(degrees, minutes, seconds)
         {
             Direction = direction;
@@ -89,51 +47,11 @@ namespace atro_bit_console
 
     public static class ArcExtensions
     {
-        public static TimeSpan ToTime(this Arc arc)
-        {
-            int hours = arc.Degrees / 15;
-            int minutes = ((arc.Degrees % 15)) * 4 + (arc.Minutes / 15);
-            int seconds = ((arc.Minutes % 15)) * 4 + (arc.Seconds / 15);
-
-            return TimeSpan.FromSeconds(hours * 3600 + minutes * 60 + seconds);
-        }
-
         public static string ToZodiacSignTimeString(this Arc arc) =>
-            $"{arc.Degrees % 30}{ZodiacSigns.GetByIndex(arc.Degrees / 30)}°{arc.Minutes}'{arc.Seconds}\"";
+            $"{arc.Degrees % 30}{ZodiacSigns.GetByIndex(arc.Degrees / 30)}°{arc.Minutes}'{arc.Seconds:F0}\"";
     }
 
-    public static class ZodiacSigns
-    {
-        private static readonly string[] signs = { "♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓" };
-
-        public static string GetByIndex(int index) =>
-            signs[index];
-    }
-
-    public static class LongitudeExtensions
-    {
-        public static double ToDegrees(this Longitude longitude) =>
-            longitude.GetDirectionFactor() * (longitude.Degrees + longitude.Minutes / 60.0 + longitude.Seconds / 3600.0);
-
-        public static Longitude ToLongitude(this double degrees, LongitudeDirection direction) =>
-            new Longitude(degrees.ToArc(), direction);
-
-        /// <summary>
-        /// Returns the local time converted to local mean time and adjusted for time zones.
-        /// </summary>
-        /// <param name="localDateTime"></param>
-        /// <param name="longitude"></param>
-        /// <returns></returns>
-        public static DateTime ToLocalGmt(this DateTime localDateTime, Longitude longitude)
-        {
-            var localMeanTime = localDateTime - TimeSpan.FromHours(longitude.GetDirectionFactor() * longitude.Degrees / 15);
-            var greenwichMeanTime = localMeanTime - new Longitude(0, longitude.Minutes, longitude.Seconds, longitude.Direction).ToTime();
-            return new DateTime(greenwichMeanTime.Year, greenwichMeanTime.Month, greenwichMeanTime.Day, greenwichMeanTime.Hour, greenwichMeanTime.Minute, greenwichMeanTime.Second, DateTimeKind.Utc);
-        }
-
-        private static int GetDirectionFactor(this Longitude longitude) =>
-            longitude.Direction == LongitudeDirection.East ? 1 : -1;
-    }
+    
 
     public static class LatitudeExtensions
     {
@@ -143,18 +61,18 @@ namespace atro_bit_console
         public static Latitude ToLatitude(this double degrees, LatitudeDirection direction) =>
             new Latitude(degrees.ToArc(), direction);
 
-        /// <summary>
-        /// Returns the local time converted to local mean time and adjusted for time zones.
-        /// </summary>
-        /// <param name="localDateTime"></param>
-        /// <param name="latitude"></param>
-        /// <returns></returns>
-        public static DateTime ToLocalGmt(this DateTime localDateTime, Latitude latitude)
-        {
-            var localMeanTime = localDateTime - TimeSpan.FromHours(latitude.GetDirectionFactor() * latitude.Degrees / 15);
-            var greenwichMeanTime = localMeanTime - new Latitude(0, latitude.Minutes, latitude.Seconds, latitude.Direction).ToTime();
-            return new DateTime(greenwichMeanTime.Year, greenwichMeanTime.Month, greenwichMeanTime.Day, greenwichMeanTime.Hour, greenwichMeanTime.Minute, greenwichMeanTime.Second, DateTimeKind.Utc);
-        }
+        ///// <summary>
+        ///// Returns the local time converted to local mean time and adjusted for time zones.
+        ///// </summary>
+        ///// <param name="localDateTime"></param>
+        ///// <param name="latitude"></param>
+        ///// <returns></returns>
+        //public static DateTime ToLocalGmt(this DateTime localDateTime, Latitude latitude)
+        //{
+        //    var localMeanTime = localDateTime - TimeSpan.FromHours(latitude.GetDirectionFactor() * latitude.Degrees / 15);
+        //    var greenwichMeanTime = localMeanTime - new Latitude(0, latitude.Minutes, latitude.Seconds, latitude.Direction).ToTime();
+        //    return new DateTime(greenwichMeanTime.Year, greenwichMeanTime.Month, greenwichMeanTime.Day, greenwichMeanTime.Hour, greenwichMeanTime.Minute, greenwichMeanTime.Second, DateTimeKind.Utc);
+        //}
 
         private static int GetDirectionFactor(this Latitude latitude) =>
             latitude.Direction == LatitudeDirection.North ? 1 : -1;
@@ -499,6 +417,7 @@ namespace atro_bit_console
 
         static void Main(string[] args)
         {
+
             Console.OutputEncoding = Encoding.UTF8;
             File.WriteAllText("output.txt", "");
 
