@@ -11,17 +11,15 @@ namespace AstroBit.Test.Math
         [TestClass]
         public class ToTime
         {
-            [TestMethod]
-            public void ShouldReturnCorrectTime()
+            [DataTestMethod]
+            [DataRow("6:00:00", 90, 0, 0)]
+            [DataRow("12:02:00", 180, 30, 0)]
+            [DataRow("13:21:21", 200, 20, 20)]
+            [DataRow("1.06:00:00", 450, 0, 0)]
+            public void ShouldReturnCorrectTime(string expectedTime, int degrees, int minutes, int seconds)
             {
-                var time1 = new Arc(90, 0, 0).ToTime();
-                time1.Should().Be(TimeSpan.FromHours(6));
-
-                var time2 = new Arc(180, 30, 0).ToTime();
-                time2.Should().Be(new TimeSpan(12, 2, 0));
-
-                var time3 = new Arc(200, 20, 20).ToTime();
-                time3.Should().Be(new TimeSpan(13, 21, 21));
+                var time = new Arc(degrees, minutes, seconds).ToTime();
+                time.Should().Be(TimeSpan.Parse(expectedTime));
             }
         }
     }
