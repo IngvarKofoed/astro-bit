@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "astro-bit", "astro-bit\astro-bit.csproj", "{B5A0B5B2-A11F-41D0-A9F9-D3609BE86D2A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "astro-bit-console", "astro-bit-console\astro-bit-console.csproj", "{6F01AF41-4C3A-426D-89D2-E41F8E45DA7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroBit.Test", "AstroBit.Test\AstroBit.Test.csproj", "{2E5051A6-5460-438E-B932-F9240198F2C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroBit.Test", "AstroBit.Test\AstroBit.Test.csproj", "{2E5051A6-5460-438E-B932-F9240198F2C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroBit", "AstroBit\AstroBit.csproj", "{660D73BF-0DBC-4349-95A7-4C767EF98A97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B5A0B5B2-A11F-41D0-A9F9-D3609BE86D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5A0B5B2-A11F-41D0-A9F9-D3609BE86D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5A0B5B2-A11F-41D0-A9F9-D3609BE86D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5A0B5B2-A11F-41D0-A9F9-D3609BE86D2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F01AF41-4C3A-426D-89D2-E41F8E45DA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F01AF41-4C3A-426D-89D2-E41F8E45DA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F01AF41-4C3A-426D-89D2-E41F8E45DA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{2E5051A6-5460-438E-B932-F9240198F2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5051A6-5460-438E-B932-F9240198F2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5051A6-5460-438E-B932-F9240198F2C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

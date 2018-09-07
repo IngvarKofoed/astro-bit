@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\astro-bit\astro-bit.csproj" />
+    <ProjectReference Include="..\AstroBit\AstroBit.csproj" />
   </ItemGroup>
 
 </Project>
