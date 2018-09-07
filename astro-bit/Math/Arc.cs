@@ -9,14 +9,17 @@ namespace AstroBit.Math
     /// Represents a circle arc in degrees, minutes and seconds.
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-    public struct Arc
+    public class Arc
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Arc"/> struct.
+        /// Initializes a new instance of the <see cref="Arc"/> class.
         /// </summary>
         /// <param name="degrees">The degrees of the arc.</param>
         /// <param name="minutes">The minutes of the arc.</param>
         /// <param name="seconds">The seconds of the arc.</param>
+        /// <exception cref="ArgumentException">if <paramref name="degrees"/> is negative.</exception>
+        /// <exception cref="ArgumentException">if <paramref name="minutes"/> is negative.</exception>
+        /// <exception cref="ArgumentException">if <paramref name="seconds"/> is negative.</exception>
         /// <remarks>
         /// Seconds and minutes are wrapped and remainder is added to next in line, from seconds to minutes
         /// and minutes to degrees. Degrees is truncated between 0 and 360.
