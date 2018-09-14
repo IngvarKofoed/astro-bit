@@ -11,6 +11,7 @@
         Saturn,
         Uranus,
         Neptune,
-        Pluto
+        Pluto,
+        Chiron
     }
 }

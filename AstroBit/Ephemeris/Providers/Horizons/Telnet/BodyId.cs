@@ -168,6 +168,7 @@
         Hydra = 903,
         Kerberos = 904,
         Styx = 905,
-        Pluto = 999
+        Pluto = 999,
+        Chiron = 2060
     }
 }

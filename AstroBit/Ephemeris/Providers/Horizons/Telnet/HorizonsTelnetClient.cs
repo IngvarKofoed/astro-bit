@@ -9,14 +9,12 @@ namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
     {
         private readonly string host;
         private readonly int port;
-        
 
         public HorizonsTelnetClient(string host = "horizons.jpl.nasa.gov", int port = 6775)
         {
             this.host = host;
             this.port = port;
-        }        
-
+        }
 
         public IList<TableEntry> GetEntires(BodyId bodyId, double longitude, double latitude, double altitude, DateTime startTime, DateTime endTime, int intervalSize, IntervalUnit intervalUnit)
         {
@@ -37,7 +35,7 @@ namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
                 outputStream.SelectEndTime(inputStream, endTime);
                 outputStream.SelectInterval(inputStream, intervalSize, intervalUnit);
                 outputStream.SelectDefault(inputStream);
-                var result = outputStream.SelectObserverTable(inputStream, TableQuantities.ObserverEclipticLongitudeLatitude);
+                var result = outputStream.SelectObserverTable(inputStream, TableQuantities.LocalApparentSiderealTime, TableQuantities.ObserverEclipticLongitudeLatitude);
 
                 return TableResultParser.Parse(result);
             }
