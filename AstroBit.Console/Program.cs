@@ -16,6 +16,7 @@ using AstroBit.Ephemeris;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using AstroBit.DbBuilding;
 
 namespace atro_bit_console
 {
@@ -394,231 +395,21 @@ namespace atro_bit_console
         }
     }
 
-    public class EphemerisContext : DbContext
-    {
-        public DbSet<EphemerisEntry> Ephemeris { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlite("Data Source=Ephemeris.db");
-            }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
-    }
+    
 
 
-    [Table("ephemeris")]
-    public class EphemerisEntry
-    {
-        public long Id { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public double SiderealTime { get; set; }
-
-        public double Sun { get; set; }
-
-        public double Moon { get; set; }
-
-        public double Mercury { get; set; }
-
-        public bool MercuryRetrograde { get; set; }
-
-        public double Venus { get; set; }
-
-        public bool VenusRetrograde { get; set; }
-
-        public double Mars { get; set; }
-
-        public bool MarsRetrograde { get; set; }
-
-        public double Jupiter { get; set; }
-
-        public bool JupiterRetrograde { get; set; }
-
-        public double Saturn { get; set; }
-
-        public bool SaturnRetrograde { get; set; }
-
-        public double Uranus { get; set; }
-
-        public bool UranusRetrograde { get; set; }
-
-        public double Neptune { get; set; }
-
-        public bool NeptuneRetrograde { get; set; }
-
-        public double Pluto { get; set; }
-
-        public bool PlutoRetrograde { get; set; }
-
-        public double Chiron { get; set; }
-
-        public double NorthNode { get; set; }
-
-        public double BlackMoonLilith { get; set; }        
-    }
+    
 
 
-    public static class EphemerisEntryExtensions
-    {
-        public static long ToId(this DateTime dateTime) =>
-            (long)dateTime.Hour << 8 + dateTime.Minute;
-    }
+    
 
 
-    public class EphemerisEntryDateEqualityComparer : IEqualityComparer<AstroBit.Ephemeris.EphemerisEntry>
-    {
-        public bool Equals(AstroBit.Ephemeris.EphemerisEntry x, AstroBit.Ephemeris.EphemerisEntry y) =>
-            x.Date.Ticks == x.Date.Ticks;
-
-        public int GetHashCode(AstroBit.Ephemeris.EphemerisEntry obj) =>
-            obj.Date.Ticks.GetHashCode();
-    }
+    
 
 
-    public abstract class EphemerisFetcher
-    {
-        private static readonly Body[] bodies = new Body[]
-        {
-            Body.Sun,
-            Body.Mercury,
-            Body.Venus,
-            Body.Moon,
-            Body.Mars,
-            Body.Jupiter,
-            Body.Saturn,
-            Body.Uranus,
-            Body.Neptune,
-            Body.Pluto,
-            Body.Chiron
-        };
+    
 
-        public void FetchYear(int year)
-        {
-            IEphemerisProvider provider = new HorizonsEphemerisProvider();
-
-            foreach (var body in bodies)
-            {
-                Console.WriteLine($"Fetching ephemeris data for {body} in the year {year}...");
-
-                var entries = provider
-                    .GetEntires(body, new ObserverPosition(0, 0, 0), new TimeInterval(new DateTime(year, 1, 1, 0, 0, 0), new DateTime(year + 1, 1, 1, 0, 0, 0), this.IntervalSize, this.IntervalUnit))
-                    .Distinct(new EphemerisEntryDateEqualityComparer())
-                    .Where(x => x.Date.Year == year)
-                    .OrderBy(x => x.Date)
-                    .ToList();
-
-                Console.WriteLine($"Persisting ephemeris data for {body} in the year {year}...");
-
-                OnNewEntries(entries, body, year);
-            }
-        }
-
-        public void FetchRange(int startYear, int endYear)
-        {
-            for (int year = startYear; year <= endYear; year++)
-            {
-                FetchYear(year);
-            }
-        }
-
-        public int IntervalSize { get; set; } = 1;
-
-        public AstroBit.Ephemeris.IntervalUnit IntervalUnit { get; set; } = AstroBit.Ephemeris.IntervalUnit.Hours;
-
-        protected abstract void OnNewEntries(List<AstroBit.Ephemeris.EphemerisEntry> entires, Body body, int year);
-    }
-
-    public class SqliteEphemerisFetcher : EphemerisFetcher
-    {
-        protected override void OnNewEntries(List<AstroBit.Ephemeris.EphemerisEntry> entires, Body body, int year)
-        {
-            using (var context = new EphemerisContext())
-            {
-                foreach (var entry in entires)
-                {
-                    var existingEntry = context.Ephemeris.Where(x => x.Id == entry.Date.Ticks).SingleOrDefault();
-                    if (existingEntry == null)
-                    {
-                        var newEntry = new EphemerisEntry
-                        {
-                            Id = entry.Date.Ticks,
-                            Date = entry.Date,
-                            SiderealTime = entry.SiderealTime
-                        };
-                        AssignValue(newEntry, body, entry.Longitude);
-
-                        context.Ephemeris.Add(newEntry);
-
-                        // Console.WriteLine($"ADDED: {body} {entry.Date}: {entry.Longitude} - {entry.Longitude.ToArc().ToZodiacSignTimeString()}");
-                    }
-                    else
-                    {
-                        AssignValue(existingEntry, body, entry.Longitude);
-                        // Console.WriteLine($"UPDATED: {body} {entry.Date}: {entry.Longitude} - {entry.Longitude.ToArc().ToZodiacSignTimeString()}");
-                    }
-                }
-
-                context.SaveChanges();
-            }
-        }
-
-        private void AssignValue(EphemerisEntry entry, Body body, double value)
-        {
-            switch (body)
-            {
-                case Body.Sun:
-                    entry.Sun = value;
-                    break;
-
-                case Body.Moon:
-                    entry.Moon = value;
-                    break;
-
-                case Body.Mercury:
-                    entry.Mercury = value;
-                    break;
-
-                case Body.Venus:
-                    entry.Venus = value;
-                    break;
-
-                case Body.Mars:
-                    entry.Mars = value;
-                    break;
-
-                case Body.Jupiter:
-                    entry.Jupiter = value;
-                    break;
-
-                case Body.Saturn:
-                    entry.Saturn = value;
-                    break;
-
-                case Body.Uranus:
-                    entry.Uranus = value;
-                    break;
-
-                case Body.Neptune:
-                    entry.Neptune = value;
-                    break;
-
-                case Body.Pluto:
-                    entry.Pluto = value;
-                    break;
-
-                case Body.Chiron:
-                    entry.Chiron = value;
-                    break;
-            }
-        }
-    }
+    
 
     /// <summary>
     /// Local Sidereal time 
@@ -645,7 +436,7 @@ namespace atro_bit_console
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            using (var context = new EphemerisContext())
+            using (var context = new EphemerisDbContext())
             {
                 //context.Database.EnsureDeleted();
                 //context.Database.EnsureCreated();
