@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AstroBit.DbBuilding
 {
     [Table("ephemeris")]
-    public class EphemerisEntry
+    public class EphemerisDbEntry
     {
         public long Id { get; set; }
 

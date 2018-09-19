@@ -15,7 +15,7 @@ namespace AstroBit.DbBuilding
                     var existingEntry = context.Ephemeris.Where(x => x.Id == entry.Date.Ticks).SingleOrDefault();
                     if (existingEntry == null)
                     {
-                        var newEntry = new EphemerisEntry
+                        var newEntry = new EphemerisDbEntry
                         {
                             Id = entry.Date.Ticks,
                             Date = entry.Date,
@@ -38,7 +38,7 @@ namespace AstroBit.DbBuilding
             }
         }
 
-        private void AssignValue(EphemerisEntry entry, Body body, double value)
+        private void AssignValue(EphemerisDbEntry entry, Body body, double value)
         {
             switch (body)
             {

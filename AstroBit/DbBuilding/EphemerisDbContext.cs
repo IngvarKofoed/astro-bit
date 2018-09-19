@@ -4,7 +4,7 @@ namespace AstroBit.DbBuilding
 {
     public class EphemerisDbContext : DbContext
     {
-        public DbSet<EphemerisEntry> Ephemeris { get; set; }
+        public DbSet<EphemerisDbEntry> Ephemeris { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
