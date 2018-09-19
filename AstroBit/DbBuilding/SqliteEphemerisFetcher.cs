@@ -6,7 +6,7 @@ namespace AstroBit.DbBuilding
 {
     public class SqliteEphemerisFetcher : EphemerisFetcher
     {
-        protected override void OnNewEntries(List<AstroBit.Ephemeris.EphemerisEntry> entires, Body body, int year)
+        protected override void OnNewEntries(List<AstroBit.Ephemeris.EphemerisBodyEntry> entires, Body body, int year)
         {
             using (var context = new EphemerisDbContext())
             {

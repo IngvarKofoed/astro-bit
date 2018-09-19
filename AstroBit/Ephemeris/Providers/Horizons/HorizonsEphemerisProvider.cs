@@ -6,7 +6,7 @@ namespace AstroBit.Ephemeris.Providers.Horizons
 {
     public class HorizonsEphemerisProvider : IEphemerisProvider
     {
-        public IEnumerable<EphemerisEntry> GetEntires(Body body, ObserverPosition observerPosition, TimeInterval timeInterval)
+        public IEnumerable<EphemerisBodyEntry> GetEntires(Body body, ObserverPosition observerPosition, TimeInterval timeInterval)
         {
             var client = new HorizonsTelnetClient();
 
@@ -22,7 +22,7 @@ namespace AstroBit.Ephemeris.Providers.Horizons
 
             foreach (var entry in entries)
             {
-                yield return new EphemerisEntry(entry.Date, entry.SiderealTime, entry.Longitude, entry.Latitude);
+                yield return new EphemerisBodyEntry(body, entry.Date, entry.SiderealTime, entry.Longitude, entry.Latitude);
             }
         }
 

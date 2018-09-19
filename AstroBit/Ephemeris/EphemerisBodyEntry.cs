@@ -2,15 +2,18 @@
 
 namespace AstroBit.Ephemeris
 {
-    public class EphemerisEntry
+    public class EphemerisBodyEntry
     {
-        public EphemerisEntry(DateTime date, double siderealTime, double longitude, double latitude)
+        public EphemerisBodyEntry(Body body, DateTime date, double siderealTime, double longitude, double latitude)
         {
+            Body = body;
             Date = date;
             SiderealTime = siderealTime;
             Longitude = longitude;
             Latitude = latitude;
         }
+
+        public Body Body { get; }
 
         public DateTime Date { get; }
 

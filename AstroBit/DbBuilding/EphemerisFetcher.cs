@@ -33,7 +33,7 @@ namespace AstroBit.DbBuilding
 
                 var entries = provider
                     .GetEntires(body, new ObserverPosition(0, 0, 0), new TimeInterval(new DateTime(year, 1, 1, 0, 0, 0), new DateTime(year + 1, 1, 1, 0, 0, 0), this.IntervalSize, this.IntervalUnit))
-                    .Distinct(new EphemerisEntryDateEqualityComparer())
+                    .Distinct(new EphemerisBodyEntryDateEqualityComparer())
                     .Where(x => x.Date.Year == year)
                     .OrderBy(x => x.Date)
                     .ToList();
@@ -56,6 +56,6 @@ namespace AstroBit.DbBuilding
 
         public AstroBit.Ephemeris.IntervalUnit IntervalUnit { get; set; } = AstroBit.Ephemeris.IntervalUnit.Hours;
 
-        protected abstract void OnNewEntries(List<AstroBit.Ephemeris.EphemerisEntry> entires, Body body, int year);
+        protected abstract void OnNewEntries(List<AstroBit.Ephemeris.EphemerisBodyEntry> entires, Body body, int year);
     }
 }

@@ -4,6 +4,6 @@ namespace AstroBit.Ephemeris
 {
     public interface IEphemerisProvider
     {
-        IEnumerable<EphemerisEntry> GetEntires(Body body, ObserverPosition observerPosition, TimeInterval timeInterval);
+        IEnumerable<EphemerisBodyEntry> GetEntires(Body body, ObserverPosition observerPosition, TimeInterval timeInterval);
     }
 }
