@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace AstroBit.Math
+namespace AstroBit.AstroMath
 {
     /// <summary>
     /// Represents a circle arc in degrees, minutes and seconds.
@@ -72,5 +72,14 @@ namespace AstroBit.Math
 
         public override string ToString() =>
             $"{Degrees}°{Minutes}'{Seconds:F0}\"";
+
+        public string ToShortString() =>
+            $"{Degrees}°{Minutes}";
+
+        public string ToZodiacString() =>
+            $"{ZodiacExtensions.GetZodiacLocalDegrees(Degrees),2:F0}{ZodiacExtensions.GetZodiac(Degrees).GetSign()}{Minutes,2:F0}'{Seconds,2:F0}";
+
+        public string ToZodiacShortString() =>
+            $"{ZodiacExtensions.GetZodiacLocalDegrees(Degrees),2:F0}{ZodiacExtensions.GetZodiac(Degrees).GetSign()}{Minutes,2:F0}";
     }
 }

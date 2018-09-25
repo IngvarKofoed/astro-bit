@@ -1,6 +1,6 @@
 ﻿#pragma warning disable SA1407 // Arithmetic expressions must declare precedence
 
-namespace AstroBit.Math
+namespace AstroBit.AstroMath
 {
     /// <summary>
     /// Extension methods for <see cref="Longitude"/>.

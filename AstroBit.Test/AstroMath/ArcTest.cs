@@ -1,7 +1,7 @@
 ﻿#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
 using System;
-using AstroBit.Math;
+using AstroBit.AstroMath;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

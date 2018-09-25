@@ -1,4 +1,4 @@
-﻿namespace AstroBit.Math
+﻿namespace AstroBit.AstroMath
 {
     /// <summary>
     /// The direction of a <see cref="Longitude"/>.

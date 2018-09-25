@@ -4,10 +4,10 @@ using System;
 
 namespace AstroBit.Test
 {
-    public static class ZodiacSignsTest
+    public static class ZodiacExtensionsTest
     {
         [TestClass]
-        public class GetByIndex
+        public class GetSignByIndex
         {
             [DataTestMethod]
             [DataRow(0, "♈")]
@@ -15,7 +15,7 @@ namespace AstroBit.Test
             [DataRow(11, "♓")]
             public void ShouldReturnExpectedSign(int index, string expectedSign)
             {
-                ZodiacSigns.GetByIndex(index).Should().Be(expectedSign);
+                ZodiacExtensions.GetSignByIndex(index).Should().Be(expectedSign);
             }
 
             [DataTestMethod]
@@ -23,7 +23,7 @@ namespace AstroBit.Test
             [DataRow(12, "")]
             public void ShouldThrowWhenOutOfRange(int index, string expectedSign)
             {
-                Action shouldThrow = () => ZodiacSigns.GetByIndex(index);
+                Action shouldThrow = () => ZodiacExtensions.GetSignByIndex(index);
                 shouldThrow.Should().Throw<ArgumentException>();
             }
         }

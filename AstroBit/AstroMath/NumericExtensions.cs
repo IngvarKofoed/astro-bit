@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AstroBit.Math
+namespace AstroBit.AstroMath
 {
     public static class NumericExtensions
     {

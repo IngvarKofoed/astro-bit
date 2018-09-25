@@ -1,4 +1,4 @@
-﻿using AstroBit.Math;
+﻿using AstroBit.AstroMath;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
