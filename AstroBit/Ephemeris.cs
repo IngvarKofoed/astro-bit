@@ -1,6 +1,6 @@
 ﻿using System;
-using AstroBit.Database;
 using AstroBit.AstroMath;
+using AstroBit.Database;
 
 namespace AstroBit
 {
