@@ -1,5 +1,5 @@
-﻿using AstroBit.DbBuilding;
-using AstroBit.Ephemeris.Writers;
+﻿using AstroBit.Horizons.DbBuilding;
+using AstroBit.Horizons.Writers;
 using System;
 using System.Linq;
 

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroBit.Test", "AstroBit.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroBit", "AstroBit\AstroBit.csproj", "{660D73BF-0DBC-4349-95A7-4C767EF98A97}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroBit.EphemerisDBUpdator", "AstroBit.EphemerisDBUpdator\AstroBit.EphemerisDBUpdator.csproj", "{E7AA2581-46A0-4019-94AC-DDD16EE452FF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroBit.EphemerisDBBuilder", "AstroBit.EphemerisDBBuilder\AstroBit.EphemerisDBBuilder.csproj", "{8A1656D4-F2AF-48A8-B09D-9EC112DAE6C2}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660D73BF-0DBC-4349-95A7-4C767EF98A97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7AA2581-46A0-4019-94AC-DDD16EE452FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7AA2581-46A0-4019-94AC-DDD16EE452FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7AA2581-46A0-4019-94AC-DDD16EE452FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7AA2581-46A0-4019-94AC-DDD16EE452FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A1656D4-F2AF-48A8-B09D-9EC112DAE6C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A1656D4-F2AF-48A8-B09D-9EC112DAE6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A1656D4-F2AF-48A8-B09D-9EC112DAE6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
