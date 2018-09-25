@@ -1,6 +1,6 @@
 ﻿using AstroBit.AstroMath;
 
-namespace AstroBit.EphemerisDBBuilder
+namespace AstroBit
 {
     public class Planet
     {

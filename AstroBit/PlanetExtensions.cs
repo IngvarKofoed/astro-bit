@@ -1,4 +1,4 @@
-﻿namespace AstroBit.EphemerisDBBuilder
+﻿namespace AstroBit
 {
     public static class PlanetExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AstroBit.EphemerisDBBuilder
+namespace AstroBit
 {
     public class EphemerisEntry
     {

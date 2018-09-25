@@ -1,4 +1,4 @@
-﻿namespace AstroBit.EphemerisDBBuilder
+﻿namespace AstroBit
 {
     public enum PlanetDirection
     {
