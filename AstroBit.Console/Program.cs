@@ -17,8 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using AstroBit.DbBuilding;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
 using System.Text.RegularExpressions;
 
 namespace atro_bit_console
