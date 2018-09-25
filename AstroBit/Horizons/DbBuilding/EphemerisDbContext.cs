@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AstroBit.DbBuilding
+namespace AstroBit.Horizons.DbBuilding
 {
     public class EphemerisDbContext : DbContext
     {

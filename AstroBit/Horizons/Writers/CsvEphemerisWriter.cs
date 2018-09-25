@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace AstroBit.Ephemeris.Writers
+namespace AstroBit.Horizons.Writers
 {
     public class CsvEphemerisWriter : IEphemerisWriter
     {

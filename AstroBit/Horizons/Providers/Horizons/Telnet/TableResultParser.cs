@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
+namespace AstroBit.Horizons.Providers.Horizons.Telnet
 {
     internal static class TableResultParser
     {

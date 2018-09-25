@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AstroBit.Ephemeris
+namespace AstroBit.Horizons
 {
     public interface IEphemerisProvider
     {

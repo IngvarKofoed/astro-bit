@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AstroBit.Ephemeris;
-using AstroBit.Ephemeris.Providers.Horizons;
+using AstroBit.Horizons;
+using AstroBit.Horizons.Providers.Horizons;
 
-namespace AstroBit.DbBuilding
+namespace AstroBit.Horizons.DbBuilding
 {
     public abstract class EphemerisFetcher
     {
@@ -54,8 +54,8 @@ namespace AstroBit.DbBuilding
 
         public int IntervalSize { get; set; } = 1;
 
-        public AstroBit.Ephemeris.IntervalUnit IntervalUnit { get; set; } = AstroBit.Ephemeris.IntervalUnit.Hours;
+        public AstroBit.Horizons.IntervalUnit IntervalUnit { get; set; } = AstroBit.Horizons.IntervalUnit.Hours;
 
-        protected abstract void OnNewEntries(List<AstroBit.Ephemeris.EphemerisBodyEntry> entires, Body body, int year);
+        protected abstract void OnNewEntries(List<AstroBit.Horizons.EphemerisBodyEntry> entires, Body body, int year);
     }
 }

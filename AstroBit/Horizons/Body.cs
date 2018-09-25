@@ -1,4 +1,4 @@
-﻿namespace AstroBit.Ephemeris
+﻿namespace AstroBit.Horizons
 {
     public enum Body
     {

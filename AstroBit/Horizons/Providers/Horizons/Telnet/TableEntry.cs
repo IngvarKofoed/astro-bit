@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
+namespace AstroBit.Horizons.Providers.Horizons.Telnet
 {
     [DebuggerDisplay("{ToString()}")]
     public struct TableEntry

@@ -1,7 +1,7 @@
 ﻿using System;
-using AstroBit.Ephemeris;
+using AstroBit.Horizons;
 
-namespace AstroBit.DbBuilding
+namespace AstroBit.Horizons.DbBuilding
 {
     public static class EphemerisDbEntryExtensions
     {

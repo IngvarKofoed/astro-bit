@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AstroBit.DbBuilding
+namespace AstroBit.Horizons.DbBuilding
 {
     [Table("ephemeris")]
     public class EphemerisDbEntry

@@ -1,4 +1,4 @@
-﻿namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
+﻿namespace AstroBit.Horizons.Providers.Horizons.Telnet
 {
     public enum BodyId
     {

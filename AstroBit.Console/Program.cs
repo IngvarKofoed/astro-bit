@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
-using AstroBit.Ephemeris.Providers.Horizons.Telnet;
+using AstroBit.Horizons.Providers.Horizons.Telnet;
 using System.Diagnostics;
 using AstroBit;
 using AstroBit.AstroMath;
-using AstroBit.Ephemeris.Providers.Horizons;
-using AstroBit.Ephemeris;
+using AstroBit.Horizons.Providers.Horizons;
+using AstroBit.Horizons;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using AstroBit.DbBuilding;
+using AstroBit.Horizons.DbBuilding;
 using System.Text.RegularExpressions;
 
 namespace atro_bit_console

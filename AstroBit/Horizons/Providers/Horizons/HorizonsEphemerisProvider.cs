@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using AstroBit.Ephemeris.Providers.Horizons.Telnet;
+using AstroBit.Horizons.Providers.Horizons.Telnet;
 
-namespace AstroBit.Ephemeris.Providers.Horizons
+namespace AstroBit.Horizons.Providers.Horizons
 {
     public class HorizonsEphemerisProvider : IEphemerisProvider
     {

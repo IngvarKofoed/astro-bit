@@ -1,12 +1,12 @@
-﻿using AstroBit.Ephemeris;
+﻿using AstroBit.Horizons;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AstroBit.DbBuilding
+namespace AstroBit.Horizons.DbBuilding
 {
     public class SqliteEphemerisFetcher : EphemerisFetcher
     {
-        protected override void OnNewEntries(List<AstroBit.Ephemeris.EphemerisBodyEntry> entires, Body body, int year)
+        protected override void OnNewEntries(List<AstroBit.Horizons.EphemerisBodyEntry> entires, Body body, int year)
         {
             using (var context = new EphemerisDbContext())
             {

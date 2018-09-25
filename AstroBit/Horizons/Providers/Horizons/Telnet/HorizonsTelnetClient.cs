@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 
-namespace AstroBit.Ephemeris.Providers.Horizons.Telnet
+namespace AstroBit.Horizons.Providers.Horizons.Telnet
 {
     public class HorizonsTelnetClient
     {

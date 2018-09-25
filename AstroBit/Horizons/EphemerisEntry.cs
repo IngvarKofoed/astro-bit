@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AstroBit.Ephemeris
+namespace AstroBit.Horizons
 {
     public class EphemerisEntry
     {
