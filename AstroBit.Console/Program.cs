@@ -10,13 +10,16 @@ using System.Globalization;
 using AstroBit.Ephemeris.Providers.Horizons.Telnet;
 using System.Diagnostics;
 using AstroBit;
-using AstroBit.Math;
+using AstroBit.AstroMath;
 using AstroBit.Ephemeris.Providers.Horizons;
 using AstroBit.Ephemeris;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using AstroBit.DbBuilding;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
+using System.Text.RegularExpressions;
 
 namespace atro_bit_console
 {
@@ -54,7 +57,7 @@ namespace atro_bit_console
     public static class ArcExtensions
     {
         public static string ToZodiacSignTimeString(this Arc arc) =>
-            $"{arc.Degrees % 30}{ZodiacSigns.GetByIndex(arc.Degrees / 30)}°{arc.Minutes}'{arc.Seconds:F0}\"";
+            $"{arc.Degrees % 30}{ZodiacExtensions.GetSignByIndex(arc.Degrees / 30)}°{arc.Minutes}'{arc.Seconds:F0}\"";
     }
 
     
@@ -432,8 +435,35 @@ namespace atro_bit_console
     /// </summary>
     class Program
     {
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
         static void Main(string[] args)
         {
+            
+
+            //string ss = "S 1 6 42 8 10j27'48 20b16 21°R55 26k 1 29i59 21°R32 15°R50 10h53 14i39 14g 7 1°R10 29g53 17b27 27°R19 S 1";
+
+            //var parser = new RowParser();
+            //parser.Hans(ss);
+
+
+            // S 1 6 42 8 10j27'48 20b16 21°R55 26k 1 29i59 21°R32 15°R50 10h53 14i39 14g 7 1°R10 29g53 17b27 27°R19 S 1
+            // 0 1 2 3  4 5        6     7                     
+
+            return;
             Console.OutputEncoding = Encoding.UTF8;
 
             using (var context = new EphemerisDbContext())
@@ -500,6 +530,8 @@ namespace atro_bit_console
             //var entires = client.GetEntires(BodyId.Sun, 0, 0, 0, new DateTime(2018, 7, 30, 0, 0, 0), new DateTime(2018, 7, 31, 0, 0, 0), 10, IntervalUnit.Minutes);
             //var entires = client.GetEntires(BodyId.Sun, 56.1666667, 9.566667, 0, new DateTime(1977, 8, 30, 0, 0, 0), new DateTime(1977, 8, 31, 0, 0, 0), 10, IntervalUnit.Minutes);
         }
+
+        
 
         private static void WriteLine(string line)
         {
