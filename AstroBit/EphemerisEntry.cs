@@ -24,20 +24,20 @@ namespace AstroBit
         {
             Date = date;
             SiderealTime = siderealTime;
-            Sun = sun;
-            Moon = moon;
-            Mercury = mercury;
-            Venus = venus;
-            Mars = mars;
-            Jupiter = jupiter;
-            Saturn = saturn;
-            Uranus = uranus;
-            Neptune = neptune;
-            Pluto = pluto;
-            TrueNode = trueNode;
-            MeanNone = meanNode;
-            BlackMoonLilith = blackmoonLilith;
-            Chiron = chiron;
+            Sun = sun.Check(p => p.Type == PlanetType.Sun);
+            Moon = moon.Check(p => p.Type == PlanetType.Moon);
+            Mercury = mercury.Check(p => p.Type == PlanetType.Mercury);
+            Venus = venus.Check(p => p.Type == PlanetType.Venus);
+            Mars = mars.Check(p => p.Type == PlanetType.Mars);
+            Jupiter = jupiter.Check(p => p.Type == PlanetType.Jupiter);
+            Saturn = saturn.Check(p => p.Type == PlanetType.Saturn);
+            Uranus = uranus.Check(p => p.Type == PlanetType.Uranus);
+            Neptune = neptune.Check(p => p.Type == PlanetType.Neptune);
+            Pluto = pluto.Check(p => p.Type == PlanetType.Pluto);
+            TrueNode = trueNode.Check(p => p.Type == PlanetType.TrueNode);
+            MeanNone = meanNode.Check(p => p.Type == PlanetType.MeanNode);
+            BlackMoonLilith = blackmoonLilith.Check(p => p.Type == PlanetType.BlackMoonLilith);
+            Chiron = chiron.Check(p => p.Type == PlanetType.Chiron);
         }
 
         public DateTime Date { get; }
