@@ -18,8 +18,9 @@ namespace AstroBit
         public PlanetDirection Direction { get; }
 
         public override string ToString() =>
-            Type == PlanetType.Sun
-                ? $"{AbsolutePosition.ToArc().ToZodiacString()}{(Direction == PlanetDirection.Direct ? " " : "R")}"
-                : $"{AbsolutePosition.ToArc().ToZodiacShortString()}{(Direction == PlanetDirection.Direct ? " " : "R")}";
+            $"{AbsolutePosition.ToArc().ToZodiacString()}{(Direction == PlanetDirection.Direct ? " " : "R")}";
+            //Type == PlanetType.Sun
+            //    ? $"{AbsolutePosition.ToArc().ToZodiacString()}{(Direction == PlanetDirection.Direct ? " " : "R")}"
+            //    : $"{AbsolutePosition.ToArc().ToZodiacShortString()}{(Direction == PlanetDirection.Direct ? " " : "R")}";
     }
 }
