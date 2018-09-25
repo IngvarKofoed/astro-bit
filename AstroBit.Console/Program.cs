@@ -433,33 +433,13 @@ namespace atro_bit_console
     /// </summary>
     class Program
     {
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
         static void Main(string[] args)
         {
-            
+            var ephemeris = new Ephemeris();
+            var entry = ephemeris.Get(new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc));
 
-            //string ss = "S 1 6 42 8 10j27'48 20b16 21°R55 26k 1 29i59 21°R32 15°R50 10h53 14i39 14g 7 1°R10 29g53 17b27 27°R19 S 1";
+            var s = entry.ToString();
 
-            //var parser = new RowParser();
-            //parser.Hans(ss);
-
-
-            // S 1 6 42 8 10j27'48 20b16 21°R55 26k 1 29i59 21°R32 15°R50 10h53 14i39 14g 7 1°R10 29g53 17b27 27°R19 S 1
-            // 0 1 2 3  4 5        6     7                     
 
             return;
             Console.OutputEncoding = Encoding.UTF8;
