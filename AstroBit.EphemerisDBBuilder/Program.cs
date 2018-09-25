@@ -1,65 +1,71 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
+using AstroBit.Database;
 using AstroBit.EphemerisDBBuilder.AstroCom;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
-using System.IO;
-using System.Net;
-using System.Collections.Generic;
 
 namespace AstroBit.EphemerisDBBuilder
 {
     class Program
     {
+        private static readonly bool useCachedPdfs = true;
+        private static readonly string outputCsvFilename = "Ephemeris.csv";
+        private static readonly bool resetDatabase = true;
+
         
         static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
+            ResetCsvFile();
 
-            File.WriteAllText("db.csv", "");
-
-            var lastEntry = last1899Entry;
-            for (int year = 1900; year < 2100; year++)
+            using (var context = new EphemerisContext())
             {
-                Console.Write($"{year}: Fetching. ");
-                var pdf = FetchPdf(year);
-                File.WriteAllBytes($"{year}.pdf", pdf);
-                var text = ExtractTextFromPdf(pdf);
-
-                Console.Write("Parsing. ");
-                var parser = new Parser(text, lastEntry);
-                var entires = parser.Parse(year).ToArray();
-
-                Console.Write("Writing. ");
-                List<string> lines = new List<string>();
-                foreach (var entry in entires)
-                {
-                    lines.Add(entry.ToString());
+                if (resetDatabase)
+                { 
+                    context.Database.EnsureDeleted();
                 }
+                context.Database.EnsureCreated();
 
-                File.AppendAllLines("db.csv", lines);
+                var lastEntry = last1899Entry;
+                for (int year = 1900; year < 2100; year++)
+                {
+                    byte[] pdf = null;
+                    if (useCachedPdfs)
+                    {
+                        Console.Write($"{year}: Loading. ");
+                        pdf = LoadPdf(year);
+                    }
+                    else
+                    {
+                        Console.Write($"{year}: Fetching. ");
+                        pdf = FetchPdf(year);
+                        Console.Write($"{year}: Saving. ");
+                        SavePdf(year, pdf);
+                    }
 
-                Console.WriteLine("Done!");
+                    Console.Write($"{year}: Converting. ");
+                    var text = ExtractTextFromPdf(pdf);
 
-                lastEntry = entires.Last();
+                    Console.Write("Parsing. ");
+                    var parser = new Parser(text, lastEntry);
+                    var entires = parser.Parse(year).ToArray();
+
+                    Console.Write("Saving DB. ");
+                    SaveToDb(context,  entires);                    
+
+                    Console.Write("Writing CSV. ");
+                    WriteToCsv(entires);
+
+                    Console.WriteLine("Done!");
+
+                    lastEntry = entires.Last();
+                }
             }
-
-            //var text = ExtractTextFromPdf(@"c:\Private\ae_1900.pdf");
-
-            //var parser = new Parser(text, last1899Entry);
-            //var entires = parser.Parse(1900).ToArray();
-
-            
-            //StringBuilder sb = new StringBuilder();
-            //foreach (var entry in entires)
-            //{
-            //    sb.AppendLine(entry.ToString());
-            //    // Console.WriteLine(entry);
-            //}
-
-            
-        }
+        }        
 
         private static byte[] FetchPdf(int year)
         {
@@ -85,6 +91,71 @@ namespace AstroBit.EphemerisDBBuilder
             {
                 return client.DownloadData($"https://www.astro.com/swisseph/ae/{century}/ae_{year}.pdf");
             }
+        }
+
+        private static byte[] LoadPdf(int year) =>
+            File.ReadAllBytes(GetPdfFileName(year));
+
+        private static void SavePdf(int year, byte[] pdf) =>
+            File.WriteAllBytes(GetPdfFileName(year), pdf);
+
+        private static string GetPdfFileName(int year) =>
+            $"{year}.pdf";
+
+
+        private static void SaveToDb(EphemerisContext context, IEnumerable<EphemerisEntry> entries)
+        {
+            foreach (var entry in entries)
+            {
+                context.Ephemeris.Add(new EfEphemerisEntry
+                {
+                    Id = entry.Date.Ticks,
+                    Date = entry.Date,
+                    SiderealTime = entry.SiderealTime,
+                    Sun = entry.Sun.AbsolutePosition,
+                    Moon = entry.Moon.AbsolutePosition,
+                    Mercury = entry.Mercury.AbsolutePosition,
+                    MercuryRetrograde = entry.Mercury.Direction == PlanetDirection.Retrograde,
+                    Venus = entry.Venus.AbsolutePosition,
+                    VenusRetrograde = entry.Venus.Direction == PlanetDirection.Retrograde,
+                    Mars = entry.Mars.AbsolutePosition,
+                    MarsRetrograde = entry.Mars.Direction == PlanetDirection.Retrograde,
+                    Jupiter = entry.Jupiter.AbsolutePosition,
+                    JupiterRetrograde = entry.Jupiter.Direction == PlanetDirection.Retrograde,
+                    Saturn = entry.Saturn.AbsolutePosition,
+                    SaturnRetrograde = entry.Saturn.Direction == PlanetDirection.Retrograde,
+                    Uranus = entry.Uranus.AbsolutePosition,
+                    UranusRetrograde = entry.Uranus.Direction == PlanetDirection.Retrograde,
+                    Neptune = entry.Neptune.AbsolutePosition,
+                    NeptuneRetrograde = entry.Neptune.Direction == PlanetDirection.Retrograde,
+                    Pluto = entry.Pluto.AbsolutePosition,
+                    PlutoRetrograde = entry.Pluto.Direction == PlanetDirection.Retrograde,
+                    TrueNode = entry.TrueNode.AbsolutePosition,
+                    TrueNodeRetrograde = entry.TrueNode.Direction == PlanetDirection.Retrograde,
+                    MeanNode = entry.MeanNone.AbsolutePosition,
+                    MeanNodeRetrograde = entry.MeanNone.Direction == PlanetDirection.Retrograde,
+                    BlackMoonLilith = entry.BlackMoonLilith.AbsolutePosition,
+                    BlackMoonLilithRetrograde = entry.BlackMoonLilith.Direction == PlanetDirection.Retrograde,
+                    Chiron = entry.Chiron.AbsolutePosition,
+                    ChironRetrograde = entry.Chiron.Direction == PlanetDirection.Retrograde
+                });
+            }
+
+            context.SaveChanges();
+        }
+
+        private static void ResetCsvFile() =>
+            File.WriteAllText(outputCsvFilename, "");
+
+        private static void WriteToCsv(IEnumerable<EphemerisEntry> entries)
+        {
+            List<string> lines = new List<string>();
+            foreach (var entry in entries)
+            {
+                lines.Add(entry.ToString());
+            }
+
+            File.AppendAllLines(outputCsvFilename, lines);
         }
 
         private static string ExtractTextFromPdf(string path)
