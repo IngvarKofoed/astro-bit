@@ -5,6 +5,8 @@ namespace AstroBit.AstroMath
 {
     public static class AMath
     {
+        public const double Epsilon = 0.0001;
+
         public static double Truncate(this double value, int maxValue) =>
             value - (int)value / maxValue * maxValue + (value < 0.0 ? maxValue : 0);
 
@@ -32,6 +34,19 @@ namespace AstroBit.AstroMath
             }
 
             return result.Truncate(360);
+        }
+
+        public static bool IsInCircleRange(double start, double end, double value)
+        {
+            if (start <= end)
+            {
+                return start <= value && value <= end;
+            }
+            else
+            {
+                return (start <= value && value <= 360.0) ||
+                       (0.0 <= value && value <= end);
+            }
         }
     }
 }
