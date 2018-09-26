@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using AstroBit.Horizons.DbBuilding;
 using System.Text.RegularExpressions;
+using AstroBit.HumanDesign;
 
 namespace atro_bit_console
 {
@@ -435,14 +436,44 @@ namespace atro_bit_console
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
+            //var date = new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc); // Martin
+            var date = DateTime.Now.ToUniversalTime();
+
             var ephemeris = new Ephemeris();
-            var entry = ephemeris.Get(new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc));
+            var entry = ephemeris.Get(date);
 
-            var s = entry.ToString();
+            Console.WriteLine(entry);
 
+
+            var humanDesignGates = new HumanDesignGates();
+
+            // var sunGate = humanDesignGates.GetDefinedGate((entry.Sun.AbsolutePosition - 88.0).Truncate(360));
+            var sunGate = humanDesignGates.GetDefinedGate(entry.Sun.AbsolutePosition);
+            var earthGate = sunGate.GetOppositeGate();
+
+            Console.WriteLine("Sun: " + sunGate);
+            Console.WriteLine("Earth: " + earthGate);
+            Console.WriteLine("Moon: " + humanDesignGates.GetDefinedGate(entry.Moon.AbsolutePosition));
+            Console.WriteLine("North Node: " + humanDesignGates.GetDefinedGate(entry.TrueNode.AbsolutePosition));
+            Console.WriteLine("South Node: " + humanDesignGates.GetDefinedGate((entry.TrueNode.AbsolutePosition + 180.0).Truncate(360)));
+            Console.WriteLine("Mercury: " + humanDesignGates.GetDefinedGate(entry.Mercury.AbsolutePosition));
+            Console.WriteLine("Venus: " + humanDesignGates.GetDefinedGate(entry.Venus.AbsolutePosition));
+            Console.WriteLine("Mars: " + humanDesignGates.GetDefinedGate(entry.Mars.AbsolutePosition));
+            Console.WriteLine("Jupiter: " + humanDesignGates.GetDefinedGate(entry.Jupiter.AbsolutePosition));
+            Console.WriteLine("Saturn: " + humanDesignGates.GetDefinedGate(entry.Saturn.AbsolutePosition));
+            Console.WriteLine("Uranus: " + humanDesignGates.GetDefinedGate(entry.Uranus.AbsolutePosition));
+            Console.WriteLine("Neptune: " + humanDesignGates.GetDefinedGate(entry.Neptune.AbsolutePosition));
+            Console.WriteLine("Pluto: " + humanDesignGates.GetDefinedGate(entry.Pluto.AbsolutePosition));
+
+            Console.WriteLine();
+            Console.WriteLine("Martin AC: " + humanDesignGates.GetDefinedGate(Zodiac.Virgo.GetStartDegree() + 13));
+            Console.WriteLine("Louise AC: " + humanDesignGates.GetDefinedGate(Zodiac.Cancer.GetStartDegree() + 28));
+            Console.WriteLine("David AC: " + humanDesignGates.GetDefinedGate(Zodiac.Gemini.GetStartDegree() + 17));
 
             return;
-            Console.OutputEncoding = Encoding.UTF8;
+            
 
             using (var context = new EphemerisDbContext())
             {
