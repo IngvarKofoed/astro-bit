@@ -1,5 +1,6 @@
 ﻿#pragma warning disable SA1407 // Arithmetic expressions must declare precedence
 
+using System;
 
 namespace AstroBit.AstroMath
 {
@@ -9,6 +10,13 @@ namespace AstroBit.AstroMath
 
         public static double Truncate(this double value, int maxValue) =>
             value - (int)value / maxValue * maxValue + (value < 0.0 ? maxValue : 0);
+
+        public static T Clamp<T>(T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0) return min;
+            else if (val.CompareTo(max) > 0) return max;
+            else return val;
+        }
 
         public static double Interpolate(double start, double end, double fraction, bool reversed = false)
         {

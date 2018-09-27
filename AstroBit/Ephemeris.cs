@@ -13,7 +13,7 @@ namespace AstroBit
             var id1 = dateToFind.Ticks;
             var id2 = (dateToFind + TimeSpan.FromDays(1)).Ticks;
 
-            using (var context = new EphemerisContext())
+            using (var context = new EphemerisDbContext())
             {
                 var entry1 = context.Ephemeris.Find(id1);
                 var entry2 = context.Ephemeris.Find(id2);

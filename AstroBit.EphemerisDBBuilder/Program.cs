@@ -22,7 +22,7 @@ namespace AstroBit.EphemerisDBBuilder
         {
             ResetCsvFile();
 
-            using (var context = new EphemerisContext())
+            using (var context = new EphemerisDbContext())
             {
                 if (resetDatabase)
                 { 
@@ -103,7 +103,7 @@ namespace AstroBit.EphemerisDBBuilder
             $"{year}.pdf";
 
 
-        private static void SaveToDb(EphemerisContext context, IEnumerable<EphemerisEntry> entries)
+        private static void SaveToDb(EphemerisDbContext context, IEnumerable<EphemerisEntry> entries)
         {
             foreach (var entry in entries)
             {

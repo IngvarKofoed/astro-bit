@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#if NETCOREAPP2_0
+using Microsoft.EntityFrameworkCore;
+#elif NET45
+using System.Data.Entity;
+#endif
 
 namespace AstroBit.Horizons.DbBuilding
 {
@@ -6,6 +10,7 @@ namespace AstroBit.Horizons.DbBuilding
     {
         public DbSet<EphemerisDbEntry> Ephemeris { get; set; }
 
+#if NETCOREAPP2_0
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -13,9 +18,6 @@ namespace AstroBit.Horizons.DbBuilding
                 optionsBuilder.UseSqlite("Data Source=Ephemeris.db");
             }
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
+#endif
     }
 }

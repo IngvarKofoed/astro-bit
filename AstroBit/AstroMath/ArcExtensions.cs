@@ -28,7 +28,7 @@ namespace AstroBit.AstroMath
         {
             var degrees = (int)decimalHours; // Floor
             var minutes = (int)Math.Round((decimalHours - degrees) * 60.0, 2); // Leave room for minutes and seconds
-            var seconds = Math.Clamp((decimalHours - degrees - (minutes / 60.0)) * 3600.0, 0.0, 60.0); // Remove rounding errors
+            var seconds = AMath.Clamp((decimalHours - degrees - (minutes / 60.0)) * 3600.0, 0.0, 60.0); // Remove rounding errors
             return new Arc(degrees, minutes, seconds);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AstroBit.Database;
 
@@ -29,7 +30,7 @@ namespace AstroBit.HumanDesign
         public DefinedGate GetDefinedGate(double absoluteDegress) =>
             gates
                 .First(x => x.IsInGate(absoluteDegress))
-                .Apply(x => (GateNumber: x.Number, LineNumber: x.Lines.First(y => y.IsInLine(absoluteDegress)).Number))
-                .Apply(x => new DefinedGate(x.GateNumber, x.LineNumber));        
+                .Apply(x => new Tuple<int, int>(x.Number, x.Lines.First(y => y.IsInLine(absoluteDegress)).Number))
+                .Apply(x => new DefinedGate(x.Item1, x.Item2));        
     }
 }

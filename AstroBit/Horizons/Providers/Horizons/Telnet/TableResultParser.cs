@@ -16,7 +16,7 @@ namespace AstroBit.Horizons.Providers.Horizons.Telnet
 
 
         public static string[] ParseLines(this string result) =>
-            result.Split(TelnetConstants.NewLine);
+            result.Split(TelnetConstants.NewLine.ToArray());
 
         public static IEnumerable<string> FilterEntries(this IEnumerable<string> lines) =>
             lines

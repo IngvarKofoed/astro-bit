@@ -59,6 +59,7 @@ namespace AstroBit
             ? value
             : throw exceptionFactory();
 
+#if NETCOREAPP2_0
         /// <summary>
         /// Validates that the given <paramref name="value1"/> and <paramref name="value2"/> is not <see langword="null"/>.
         /// If <paramref name="value1"/> and <paramref name="value2"/> is not <see langword="null" /> then
@@ -76,6 +77,7 @@ namespace AstroBit
         /// <exception cref="ArgumentNullException">if any of <paramref name="value1"/> and <paramref name="value2"/> is <see langword="null"/>.</exception>
         public static(TValue1, TValue2) NotNull<TValue1, TValue2>(TValue1 value1, string name1, TValue2 value2, string name2) =>
             (value1.NotNull(name1), value2.NotNull(name2));
+#endif
 
         /// <summary>
         /// Validates the given <paramref name="value"/> by calling the given <paramref name="validator"/>.
