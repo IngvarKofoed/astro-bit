@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 #elif NET45
 using System.Data.Entity;
+using System.Data.SQLite;
 #endif
 
 namespace AstroBit.Database
 {
     public class EphemerisDbContext : DbContext
     {
-        private const string connectionString = "Data Source=Ephemeris.db";
-
         public DbSet<EfEphemerisEntry> Ephemeris { get; set; }
 
 #if NET45
         public EphemerisDbContext()
-            : base(connectionString)
+            : base(new SQLiteConnection("Data Source=|DataDirectory|Ephemeris.db"), true)
         {
         }
 #endif
@@ -24,7 +23,7 @@ namespace AstroBit.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite(connectionString);
+                optionsBuilder.UseSqlite("Data Source=Ephemeris.db");
             }
         }
 #endif

@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 #elif NET45
 using System.Data.Entity;
+using System.Data.SQLite;
 #endif
 
 namespace AstroBit.Database
 {
     public class HumanDesignDbContext : DbContext
     {
-        private const string connectionString = "Data Source=HumanDesign.db";
-
         public DbSet<EfHumanDesignGateEntry> Gates { get; set; }
 
 #if NET45
         public HumanDesignDbContext()
-            : base(connectionString)
+            : base(new SQLiteConnection("Data Source=|DataDirectory|HumanDesign.db"), true)
         {
         }
 #endif
@@ -24,7 +23,7 @@ namespace AstroBit.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite(connectionString);
+                optionsBuilder.UseSqlite("Data Source=HumanDesign.db");
             }
         }
 #endif

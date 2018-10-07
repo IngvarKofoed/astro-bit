@@ -16,6 +16,7 @@ namespace AstroBit.HumanDesign
                 gates = context
                     .Gates
                     .GroupBy(x => x.GateNumber)
+                    .ToList()
                     .Select(x => x.ToGate())
                     .ToList();
             }
