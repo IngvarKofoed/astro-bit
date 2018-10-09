@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroBit.HumanDesign.DBBuil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroBit.Website", "AstroBit.Website\AstroBit.Website.csproj", "{986EECD6-7DC8-4627-AF46-741C51024E90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroBit.SvgCleaner.Console", "AstroBit.SvgCleaner.Console\AstroBit.SvgCleaner.Console.csproj", "{82F4E55E-64F0-4B3C-A497-523FC569B27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{986EECD6-7DC8-4627-AF46-741C51024E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{986EECD6-7DC8-4627-AF46-741C51024E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{986EECD6-7DC8-4627-AF46-741C51024E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F4E55E-64F0-4B3C-A497-523FC569B27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F4E55E-64F0-4B3C-A497-523FC569B27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F4E55E-64F0-4B3C-A497-523FC569B27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F4E55E-64F0-4B3C-A497-523FC569B27D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
