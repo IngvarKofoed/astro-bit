@@ -40,9 +40,9 @@ export class Home extends React.Component<HomeProps, HomeState>  {
             <Dropdown placeholder='Select Person' fluid search selection options={personOptions} onChange={this.personSelected.bind(this)} value={this.state.selectedPerson !== undefined ? this.state.selectedPerson.id : undefined} />
             <Header as='h1'>{this.state.selectedPerson !== undefined ? this.state.selectedPerson.name : ''}</Header>            
             <Header as='h2'>Human Design Chart</Header>
-            <HumanDesignPlanets humanDesign={this.state.selectedPerson !== undefined ? this.state.selectedPerson.humanDesign : undefined} />
+            <HumanDesignPlanets person={this.state.selectedPerson} />
             <Header as='h2'>All gates (design and personality) listed in order</Header>
-            <HumanDesignGates person={this.state.selectedPerson !== undefined ? this.state.selectedPerson : undefined} />
+            <HumanDesignGates person={this.state.selectedPerson} />
         </div>);
     }    
 

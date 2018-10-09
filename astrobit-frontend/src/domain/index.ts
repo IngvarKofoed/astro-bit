@@ -20,7 +20,8 @@ export const persons = [
             new DefinedGate(PlanetType.Pluto, 47, 6),
         ], 
         [
-            new DefinedGate(PlanetType.Sun, 27, 5),
+            //new DefinedGate(PlanetType.Sun, 27, 5),
+            new DefinedGate(PlanetType.Sun, 63, 5),
             new DefinedGate(PlanetType.Earth, 28, 5),
             new DefinedGate(PlanetType.Moon, 42, 2),
             new DefinedGate(PlanetType.TrueNode, 51, 4),
