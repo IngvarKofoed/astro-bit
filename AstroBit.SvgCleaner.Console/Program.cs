@@ -10,7 +10,7 @@ namespace AstroBit.SvgCleaner
     {
         static void Main(string[] args)
         {
-            var document = XDocument.Load(@"c:\Users\mje\Desktop\HumanDesign.svg");
+            var document = XDocument.Load(@"..\..\..\..\Documents\HumanDesign.svg");
 
             InkScapeSvgCleaner.Clean(document);
 

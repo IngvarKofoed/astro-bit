@@ -83,6 +83,10 @@ namespace AstroBit.SvgCleaner
                 {
                     attribute.Value = $"#this.getGatePathStyle({GetGateId(elementId)})#";
                 }
+                else if (elementId.StartsWith("white_"))
+                {
+                    attribute.Value = $"#this.whiteStyle#";
+                }
                 else 
                 {
                     attribute.Value = "#this.basicStyle#";
