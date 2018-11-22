@@ -1,73 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using AstroBit.Database;
-using AstroBit.HumanDesign.DBBuilder.HumanDesignSystemCom;
 
-namespace AstroBit.HumanDesign.DBBuilder
+namespace AstroBit.HumanDesign.Txt
 {
-    /// <summary>
-    /// http://www.humandesignsystem.com/archive/varDocs/TheHDSynthesisIndex.pdf
-    /// </summary>
-    class Program
+    public class GateParser
     {
-        // private static readonly bool resetDatabase = true;
-
-        static void Main(string[] args)
+        public static IEnumerable<Gate> Parse()
         {
             var parser = new Parser(text);
-            var gates = parser.Parse().OrderBy(x => x.Number);
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("Dictionary<int, double[]> hexagrams = new Dictionary<int, double[]>");
-            sb.AppendLine("{");
-            foreach (var gate in gates)
-            {
-                var lines = gate.Lines.Aggregate("", (a, l) => a == "" ? $"{l.EndDegree.ToString(CultureInfo.InvariantCulture)}" : $"{a}, {l.EndDegree.ToString(CultureInfo.InvariantCulture)}");
-                //sb.AppendLine($"hexagrams.Add({gate.Number}, new[] {{ {lines} }});");
-                sb.AppendLine($"{{ {gate.Number}, new[] {{ {lines} }} }},");
-            }
-            sb.AppendLine("}");
-
-            var result = sb.ToString();
+            return parser.Parse().OrderBy(x => x.Number);
         }
-
-
-        //static void Main(string[] args)
-        //{
-        //    var parser = new Parser(text);
-        //    var gates = parser.Parse();
-
-        //    using (var context = new HumanDesignDbContext())
-        //    {
-        //        if (resetDatabase)
-        //        {
-        //            context.Database.EnsureDeleted();
-        //        }
-        //        context.Database.EnsureCreated();
-
-
-
-        //        foreach (var gate in gates)
-        //        {
-        //            foreach (var line in gate.Lines)
-        //            {
-        //                context.Gates.Add(new EfHumanDesignGateEntry
-        //                {
-        //                    GateNumber = gate.Number,
-        //                    LineNumber = line.Number,
-        //                    StartDegree = line.StartDegree,
-        //                    EndDegree = line.EndDegree
-        //                });
-        //            }
-        //        }
-
-        //        context.SaveChanges();
-        //    }
-        //}
 
         private static readonly string text = @"HEAVEN
 1 Ji 43 Ajna 14 Sacral 34 Sacral
