@@ -14,6 +14,12 @@ namespace AstroBit.Svg
         public static XElement SvgElement(this XDocument document) =>
             document.Root;
 
+        public static XElement AddSvgStyle(this XElement element, string style)
+        {
+            element.AddAttribute("style", style);
+            return element;
+        }
+
         public static XElement Line(double x1, double y1, double x2, double y2, string style, string id = null)
         {
             var line = new XElement("line".SvgName());
@@ -64,6 +70,21 @@ namespace AstroBit.Svg
             var polygon = Polygon(points, id);
             element.Add(polygon);
             return polygon;
+        }
+
+        public static XElement Text(double x, double y, string text, string id = null)
+        {
+            var textElement = new XElement("text".SvgName(), text);
+            textElement.AddAttribute("x", x);
+            textElement.AddAttribute("y", y);
+
+            return textElement;
+        }
+
+        public static XElement AddTextRotation(this XElement textElement, double rotation)
+        {
+            textElement.AddAttribute("roration", rotation);
+            return textElement;
         }
 
         private static XElement SafeAddIdAttribute(this XElement element, string id)

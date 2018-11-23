@@ -37,6 +37,7 @@ namespace AstroBit.Mandala
                 .Apply(x => x.Add(new XAttribute("viewBox", $"0 0 {Width} {Height}")))
                 //.Apply(x => x.Add(CreateZodiacDivisions(CenterX, CenterY, Radius).ToArray()))
                 .Apply(x => x.Add(CreateHexagrams(CenterX, CenterY, hexagramInnerRadius, hexagramOuterRadius).ToArray()))
+                .Apply(x => x.Add(CreateHexagramLabels(CenterX, CenterY, hexagramInnerRadius, hexagramOuterRadius).ToArray()))
                 .Apply(x => x.Add(CreateHexagramDivisions(CenterX, CenterY, hexagramInnerRadius, hexagramLineMarkerOuterRadius).ToArray()))
                 .Apply(x => x.Add(CreateHexagramLineMarkers(CenterX, CenterY, hexagramLineMarkerInnerRadius, hexagramLineMarkerOuterRadius).ToArray()))
                 .Apply(x => x.AddCircle(CenterX, CenterY, hexagramInnerRadius, "fill:none;stroke:#000000;stroke-width:0.4"))
@@ -110,47 +111,10 @@ namespace AstroBit.Mandala
                         break;
                 }
 
-                // TODO: This map only works for SOME, the first 4 of: 1, 8, 7, 3, 2, 5, 4, 6
-                Dictionary<int, int> blah = new Dictionary<int, int>
-                {
-                    { 1, 1 },
-                    { 2, 8 },
-                    { 3, 4 },
-                    { 4, 6 },
-                    { 5, 7 },
-                    { 6, 5 },
-                    { 7, 3 },
-                    { 8, 2 }
-                };
-
-                // TODO: This map only works for SOME, the first 4 of: 1, 8, 7, 3, 2, 5, 4, 6
-                Dictionary<int, int> blah2 = new Dictionary<int, int>
-                {
-                    { 1, 8 },
-                    { 2, 1 },
-                    { 3, 5 },
-                    { 4, 3 },
-                    { 5, 2 },
-                    { 6, 4 },
-                    { 7, 6 },
-                    { 8, 7 }
-                };
-                int[] aa = { 2, 4, 5, 6 };
-
-                if (!aa.Any(x => x == (int)hexagram.InnerTrigram))
-                { 
                 color = Rgb
                     .Parse(color)
-                    .WithSaturation((byte)(7 * (blah[(int)hexagram.OuterTrigram] - 1)))
+                    .WithSaturation((byte)(7 * (hexagram.CircleIndex() % 8)))
                     .ToString();
-                }
-                else
-                {
-                    color = Rgb
-                    .Parse(color)
-                    .WithSaturation((byte)(7 * (blah2[(int)hexagram.OuterTrigram] - 1)))
-                    .ToString();
-                }
 
                 // var color = HexagramLL.FillColors[hexagram.Number];
 
@@ -160,6 +124,32 @@ namespace AstroBit.Mandala
                     .AddAttribute("style", $"fill:{color}");
 
                 yield return polygon;
+            }
+        }
+
+        private static IEnumerable<XElement> CreateHexagramLabels(double centerX, double centerY, double innerRadius, double outerRadius)
+        {
+            foreach (var hexagram in HexagramLL.HexagramsByInnerTrigram)
+            {
+                // S: 345, E: 355
+
+                // S: 355, E: 5
+
+                var point = CircleMath.GetPoint(
+                    HexagramOffset - (hexagram.Lines[0].StartDegree + (hexagram.Lines[5].EndDegree - hexagram.Lines[0].StartDegree).Truncate(360) / 2.0),
+                    innerRadius + (outerRadius - innerRadius) / 2.0,
+                    centerX,
+                    centerY);
+
+                var text = SvgBuild
+                    .Text(point.X, point.Y, hexagram.Number.ToString())
+                    .AddAttribute("text-anchor", "middle")
+                    .AddAttribute("alignment-baseline", "central")
+                    .AddAttribute("style", "font-family: Arial; font-size:20px");
+                // TODO: Add text style
+                // TODO: Fix angle wrapping EndDegree - StartDegree
+
+                yield return text;
             }
         }
 
