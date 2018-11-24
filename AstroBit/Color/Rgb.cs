@@ -4,18 +4,18 @@ namespace AstroBit.Color
 {
     public class Rgb
     {
-        public Rgb(byte r, byte g, byte b)
+        public Rgb(int r, int g, int b)
         {
-            R = r;
-            G = g;
-            B = b;
+            R = r.Check(x => 0 <= x && x <= 255);
+            G = g.Check(x => 0 <= x && x <= 255);
+            B = b.Check(x => 0 <= x && x <= 255);
         }
 
-        public byte R { get; }
+        public int R { get; }
 
-        public byte G { get; }
+        public int G { get; }
 
-        public byte B { get; }        
+        public int B { get; }        
 
         public static Rgb Parse(string color)
         {
@@ -24,9 +24,9 @@ namespace AstroBit.Color
                 color = color.Substring(1);
             }
 
-            byte r = Convert.ToByte(color.Substring(0, 2), 16);
-            byte g = Convert.ToByte(color.Substring(2, 2), 16);
-            byte b = Convert.ToByte(color.Substring(4, 2), 16);
+            int r = Convert.ToByte(color.Substring(0, 2), 16);
+            int g = Convert.ToByte(color.Substring(2, 2), 16);
+            int b = Convert.ToByte(color.Substring(4, 2), 16);
 
             return new Rgb(r, g, b);
         }
@@ -37,10 +37,10 @@ namespace AstroBit.Color
 
     public static class RgbExtensions
     {
-        public static Rgb WithSaturation(this Rgb rgb, byte saturation) =>
+        public static Rgb WithSaturation(this Rgb rgb, int saturation) =>
             new Rgb(
-                (byte)Math.Min(rgb.R + saturation, 255),
-                (byte)Math.Min(rgb.G + saturation, 255),
-                (byte)Math.Min(rgb.B + saturation, 255));
+                Math.Min(rgb.R + saturation, 255),
+                Math.Min(rgb.G + saturation, 255),
+                Math.Min(rgb.B + saturation, 255));
     }
 }

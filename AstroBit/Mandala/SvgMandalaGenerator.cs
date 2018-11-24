@@ -113,7 +113,7 @@ namespace AstroBit.Mandala
 
                 color = Rgb
                     .Parse(color)
-                    .WithSaturation((byte)(7 * (hexagram.CircleIndex() % 8)))
+                    .WithSaturation(7 * (hexagram.CircleIndex() % 8))
                     .ToString();
 
                 // var color = HexagramLL.FillColors[hexagram.Number];
