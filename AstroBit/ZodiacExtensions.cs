@@ -113,6 +113,20 @@ namespace AstroBit
             }
         }
 
+        public static Zodiac GetDegreeZodiac(this double absoluteDegrees)
+        {
+            int localDregree = (int)GetZodiacLocalDegrees(absoluteDegrees);
+            if (localDregree == 0)
+            {
+                return GetZodiac(absoluteDegrees);
+            }
+            else
+            {
+                int index = (localDregree + 11) % 12;
+                return (Zodiac)index;
+            }
+        }
+
         public static double GetAbsoluteDegrees(this Zodiac zodiac, double hours, double minutes, double seconds = 0.0) =>
             zodiac.GetStartDegree() + hours + (minutes / 60.0) + (seconds / 3600.0);
 

@@ -483,23 +483,18 @@ namespace atro_bit_console
 
             foreach (var planet in ephemeris.AllPlanets)
             {
-                int localDegree = (int)planet.GetZodiacLocalDegrees();
-                int zodiacSignIndex = (localDegree % 12) - 1;
-                zodiacSignIndex = (zodiacSignIndex + 12) % 12;
+                var position = planet.AbsolutePosition;
+                Zodiac zodiacSign = position.GetDegreeZodiac();
 
-                Zodiac zodiacSign = (Zodiac)zodiacSignIndex;
-                Console.WriteLine($"{planet.Type}: {zodiacSign} - {planet.GetZodiacLocalDegrees()}");
+                Console.WriteLine($"{planet.Type}: {zodiacSign} ({position.ToArc().ToZodiacSignTimeString()})");
             }
 
             for (int house = 1; house <= 12; house++)
             {
-                var cusp = Placidian.GetHouseCusp(house, birthDate, birthLongitude, birthLatitude).ToArc();
-                int localDegree = (int)(cusp.Degrees % 30);
-                int zodiacSignIndex = (localDegree % 12) - 1;
-                zodiacSignIndex = (zodiacSignIndex + 12) % 12;
+                var cusp = Placidian.GetHouseCusp(house, birthDate, birthLongitude, birthLatitude);
+                Zodiac zodiacSign = cusp.GetDegreeZodiac();
 
-                Zodiac zodiacSign = (Zodiac)zodiacSignIndex;
-                Console.WriteLine($"House: {house}: {zodiacSign} - {cusp.Degrees % 30}");
+                Console.WriteLine($"House: {house}: {zodiacSign} ({cusp.ToArc().ToZodiacSignTimeString()})");
             }
 
             //birthDate.ToMediumCoeli(birthLongitude).to
