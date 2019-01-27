@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP2_0
+﻿#if NETCOREAPP2_2
 using Microsoft.EntityFrameworkCore;
 #elif NET45
 using System.Data.Entity;
@@ -18,7 +18,7 @@ namespace AstroBit.Database
         }
 #endif
 
-#if NETCOREAPP2_0
+#if NETCOREAPP2_2
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -28,7 +28,7 @@ namespace AstroBit.Database
         }
 #endif
 
-#if NETCOREAPP2_0
+#if NETCOREAPP2_2
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder

@@ -45,38 +45,6 @@ namespace AstroBit.Test
         }
 
         [TestClass]
-        public class NotNullWithTwoValues
-        {
-            [TestMethod]
-            public void ShouldReturnGivenValuesWhenNoneAreNull()
-            {
-                var value1 = "test1";
-                var value2 = "test2";
-                (string v1, string v2) = Validate.NotNull(value1, nameof(value1), value2, nameof(value2));
-                v1.Should().Be(value1);
-                v2.Should().Be(value2);
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentNullException))]
-            public void ShouldThrowWhenFirstValueIsNull()
-            {
-                string value1 = null;
-                var value2 = "test2";
-                Validate.NotNull(value1, nameof(value1), value2, nameof(value2));
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentNullException))]
-            public void ShouldThrowWhenSecondValueIsNull()
-            {
-                var value1 = "test1";
-                string value2 = null;
-                Validate.NotNull(value1, nameof(value1), value2, nameof(value2));
-            }
-        }
-
-        [TestClass]
         public class Check
         {
             [TestMethod]

@@ -424,22 +424,22 @@ namespace atro_bit_console
     {
         static void Main(string[] args)
         {
-            MandalaGeneratorTest();
+            //MandalaGeneratorTest();
             //SqliteEphemerisFetcher fetcher = new SqliteEphemerisFetcher();
             //fetcher.FetchRange(2018, 2020);
 
             //Console.WriteLine("ALL DONE!!!");
             //Console.ReadKey();
 
-            return;
+            //return;
 
-            
-            File.WriteAllText("output.txt", "");
+
+            //File.WriteAllText("output.txt", "");
 
             //// Martin
-            //var birthDate = new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc); // Must be UTC with out DST
-            //var birthLongitude = new Longitude(9, 34, 0, LongitudeDirection.East);
-            //var birthLatitude = new Latitude(56, 10, 0, LatitudeDirection.North);
+            var birthDate = new DateTime(1977, 8, 30, 5, 10, 0, DateTimeKind.Utc); // Must be UTC with out DST
+            var birthLongitude = new Longitude(9, 34, 0, LongitudeDirection.East);
+            var birthLatitude = new Latitude(56, 10, 0, LatitudeDirection.North);
 
             //// Bastian
             //var birthDate = new DateTime(2007, 9, 3, 23, 0, 0, DateTimeKind.Utc); // Must be UTC with out DST
@@ -447,9 +447,9 @@ namespace atro_bit_console
             //var birthLatitude = new Latitude(55, 40, 0, LatitudeDirection.North);
 
             // Louise
-            var birthDate = new DateTime(1968, 4, 26, 8, 45, 0, DateTimeKind.Utc); // Must be UTC with out DST
-            var birthLongitude = new Longitude(9, 56, 0, LongitudeDirection.East);
-            var birthLatitude = new Latitude(57, 3, 0, LatitudeDirection.North);
+            //var birthDate = new DateTime(1968, 4, 26, 8, 45, 0, DateTimeKind.Utc); // Must be UTC with out DST
+            //var birthLongitude = new Longitude(9, 56, 0, LongitudeDirection.East);
+            //var birthLatitude = new Latitude(57, 3, 0, LatitudeDirection.North);
 
             //var birthDate = new DateTime(2016, 11, 2, 21, 17, 30);
             //var birthLongitude = new Longitude(6, 54, 0, LongitudeDirection.East);
@@ -470,13 +470,39 @@ namespace atro_bit_console
             {
                 var cusp = Placidian.GetHouseCusp(house, birthDate, birthLongitude, birthLatitude).ToArc();
                 WriteLine($"House {house} cusp: {cusp.ToZodiacSignTimeString()} ({cusp})");
-            }            
+            }
+
+            var ephemeris = new Ephemeris().Get(birthDate);
+
+            foreach (var planet in ephemeris.AllPlanets)
+            {
+                int localDegree = (int)planet.GetZodiacLocalDegrees();
+                int zodiacSignIndex = (localDegree % 12) - 1;
+                zodiacSignIndex = (zodiacSignIndex + 12) % 12;
+
+                Zodiac zodiacSign = (Zodiac)zodiacSignIndex;
+                Console.WriteLine($"{planet.Type}: {zodiacSign} - {planet.GetZodiacLocalDegrees()}");
+            }
+
+            for (int house = 1; house <= 12; house++)
+            {
+                var cusp = Placidian.GetHouseCusp(house, birthDate, birthLongitude, birthLatitude).ToArc();
+                int localDegree = (int)(cusp.Degrees % 30);
+                int zodiacSignIndex = (localDegree % 12) - 1;
+                zodiacSignIndex = (zodiacSignIndex + 12) % 12;
+
+                Zodiac zodiacSign = (Zodiac)zodiacSignIndex;
+                Console.WriteLine($"House: {house}: {zodiacSign} - {cusp.Degrees % 30}");
+            }
+
+            //birthDate.ToMediumCoeli(birthLongitude).to
+            //Console.WriteLine($"{planet.Type}: {zodiacSign} - {planet.GetZodiacLocalDegrees()}");
 
             //HorizonsTelnetClient client = new HorizonsTelnetClient();
 
             //var entires = client.GetEntires(BodyId.Sun, 0, 0, 0, new DateTime(2018, 7, 30, 0, 0, 0), new DateTime(2018, 7, 31, 0, 0, 0), 10, IntervalUnit.Minutes);
             //var entires = client.GetEntires(BodyId.Sun, 56.1666667, 9.566667, 0, new DateTime(1977, 8, 30, 0, 0, 0), new DateTime(1977, 8, 31, 0, 0, 0), 10, IntervalUnit.Minutes);
-        }
+            }
 
         private static void MandalaGeneratorTest()
         {

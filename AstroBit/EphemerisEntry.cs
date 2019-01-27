@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AstroBit
 {
@@ -71,6 +72,27 @@ namespace AstroBit
         public Planet BlackMoonLilith { get; }
 
         public Planet Chiron { get; }
+
+        public IEnumerable<Planet> AllPlanets
+        {
+            get
+            {
+                yield return Sun;
+                yield return Moon;
+                yield return Mercury;
+                yield return Venus;
+                yield return Mars;
+                yield return Jupiter;
+                yield return Saturn;
+                yield return Uranus;
+                yield return Neptune;
+                yield return Pluto;
+                yield return TrueNode;
+                yield return MeanNone;
+                yield return BlackMoonLilith;
+                yield return Chiron;
+            }
+        }
 
         public override string ToString() =>
             $"{Date.ToString("yyyy-MM-dd")} {Sun} {Moon} {Mercury} {Venus} {Mars} {Jupiter} {Saturn} {Uranus} {Neptune} {Pluto} {TrueNode} {MeanNone} {BlackMoonLilith} {Chiron}";
