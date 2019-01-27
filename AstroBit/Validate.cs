@@ -95,5 +95,10 @@ namespace AstroBit
             validator(value)
             ? value
             : throw new ArgumentException(message);
+
+        public static double IsNumber(this double value, string message = "") =>
+            !double.IsInfinity(value) && !double.IsNaN(value) && !double.IsNegativeInfinity(value) && !double.IsPositiveInfinity(value)
+            ? value
+            : throw new ArgumentException($"Expected a real number: {message}");
     }
 }

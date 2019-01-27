@@ -40,10 +40,19 @@ namespace AstroBit.Mandala
                 .Apply(x => x.Add(CreateHexagramLabels(CenterX, CenterY, hexagramInnerRadius, hexagramOuterRadius).ToArray()))
                 .Apply(x => x.Add(CreateHexagramDivisions(CenterX, CenterY, hexagramInnerRadius, hexagramLineMarkerOuterRadius).ToArray()))
                 .Apply(x => x.Add(CreateHexagramLineMarkers(CenterX, CenterY, hexagramLineMarkerInnerRadius, hexagramLineMarkerOuterRadius).ToArray()))
+                .Apply(x => x.Add(CreateZodiacs(CenterX, CenterY, hexagramInnerRadius - 50, hexagramInnerRadius).ToArray()))
                 .Apply(x => x.AddCircle(CenterX, CenterY, hexagramInnerRadius, "fill:none;stroke:#000000;stroke-width:0.4"))
                 .Apply(x => x.AddCircle(CenterX, CenterY, hexagramOuterRadius, "fill:none;stroke:#000000;stroke-width:0.4"));
 
-            //AddHexagramDivisions(svgElement.Value, Radius - 50, Radius);
+            //var path = PathBuilderParser
+            //    .Parse("M 64.28125,95.179581 L 64.28125,91.398331 C 64.281226,88.419171 63.635393,83.106676 62.34375,75.460831 C 61.760395,71.856687 60.802062,68.106691 59.46875,64.210831 C 58.114565,60.252532 56.6979,57.148369 55.21875,54.898331 C 54.072902,53.190039 52.70832,52.335874 51.125,52.335831 C 49.333324,52.335874 48.083325,53.023373 47.375,54.398331 C 46.72916,55.669204 46.406243,57.054619 46.40625,58.554581 C 46.406243,61.721281 47.541659,64.585861 49.8125,67.148331 L 44.5,67.148331 C 42.666664,64.335862 41.749998,61.367115 41.75,58.242081 C 41.749998,54.971288 42.624997,52.40879 44.375,50.554581 C 46.187494,48.637961 48.385408,47.679628 50.96875,47.679581 C 54.302069,47.679628 56.906233,49.054627 58.78125,51.804581 C 60.906229,54.908788 62.67706,58.679617 64.09375,63.117081 C 65.093725,66.346276 65.937474,69.919189 66.625,73.835831 C 67.312472,69.919189 68.156222,66.346276 69.15625,63.117081 C 70.489553,58.783784 72.260384,55.012954 74.46875,51.804581 C 76.343713,49.054627 78.947878,47.679628 82.28125,47.679581 C 84.864538,47.679628 87.062453,48.637961 88.875,50.554581 C 90.624949,52.40879 91.499948,54.971288 91.5,58.242081 C 91.499948,61.367115 90.583283,64.335862 88.75,67.148331 L 83.4375,67.148331 C 85.708287,64.585861 86.843703,61.721281 86.84375,58.554581 C 86.843703,57.054619 86.520787,55.669204 85.875,54.398331 C 85.166621,53.023373 83.916623,52.335874 82.125,52.335831 C 80.541626,52.335874 79.177044,53.190039 78.03125,54.898331 C 76.552047,57.148369 75.135381,60.252532 73.78125,64.210831 C 72.447884,68.106691 71.489552,71.856687 70.90625,75.460831 C 69.614554,83.106676 68.968721,88.419171 68.96875,91.398331 L 68.96875,95.179581 L 64.28125,95.179581")
+            //    .ToArray();
+            //var svgElement = new XElement("svg".SvgName())
+            //    .CreateMonad()
+            //    .Apply(x => x.Add(SvgBuild.Path(new PathBuilder(path)).AddAttribute("style", "fill: #000000")))
+            //    .Apply(x => x.Add(SvgBuild.Path(new PathBuilder(path.CenterAtZero())).AddAttribute("style", "fill: #000000")));
+
+
 
             return svgElement.Value;
         }
@@ -172,5 +181,49 @@ namespace AstroBit.Mandala
                 yield return SvgBuild.Line(point1.X, point1.Y, point2.X, point2.Y, "stroke:#000000;stroke-width:0.2");
             }
         }
+
+        public IEnumerable<XElement> CreateZodiacs(double centerX, double centerY, double innerRadius, double outerRadius)
+        {
+            foreach (var index in Enumerable.Range(0, 12))
+            {
+                var innserStart = CircleMath.GetPoint(GetAngle(index * 30), innerRadius, centerX, centerY);
+                PathBuilder path = new PathBuilder(innserStart.X, innserStart.Y);
+
+                foreach (var subIndex in Enumerable.Range(1, 6))
+                {
+                    var inner = CircleMath.GetPoint(GetAngle(index * 30 + subIndex * 5), innerRadius, centerX, centerY);
+                    path = path.LineTo(inner.X, inner.Y);
+                }
+
+                foreach (var subIndex in Enumerable.Range(0, 7))
+                {
+                    var outer = CircleMath.GetPoint(GetAngle(index * 30 + 30 - subIndex * 5), outerRadius, centerX, centerY);
+                    path = path.LineTo(outer.X, outer.Y);
+                }
+
+                yield return SvgBuild
+                    .Path(path.Close())
+                    .AddSvgStyle($"fill: {Rgb.From(100, index * 10 + 120, 100)}");
+
+
+                var zodiacCenter = CircleMath.GetPoint(GetAngle(index * 30 + 15), innerRadius + (outerRadius - innerRadius) / 2.0, centerX, centerY);
+
+                var zodiacPath = PathBuilderParser
+                    .Parse("M 64.28125,95.179581 L 64.28125,91.398331 C 64.281226,88.419171 63.635393,83.106676 62.34375,75.460831 C 61.760395,71.856687 60.802062,68.106691 59.46875,64.210831 C 58.114565,60.252532 56.6979,57.148369 55.21875,54.898331 C 54.072902,53.190039 52.70832,52.335874 51.125,52.335831 C 49.333324,52.335874 48.083325,53.023373 47.375,54.398331 C 46.72916,55.669204 46.406243,57.054619 46.40625,58.554581 C 46.406243,61.721281 47.541659,64.585861 49.8125,67.148331 L 44.5,67.148331 C 42.666664,64.335862 41.749998,61.367115 41.75,58.242081 C 41.749998,54.971288 42.624997,52.40879 44.375,50.554581 C 46.187494,48.637961 48.385408,47.679628 50.96875,47.679581 C 54.302069,47.679628 56.906233,49.054627 58.78125,51.804581 C 60.906229,54.908788 62.67706,58.679617 64.09375,63.117081 C 65.093725,66.346276 65.937474,69.919189 66.625,73.835831 C 67.312472,69.919189 68.156222,66.346276 69.15625,63.117081 C 70.489553,58.783784 72.260384,55.012954 74.46875,51.804581 C 76.343713,49.054627 78.947878,47.679628 82.28125,47.679581 C 84.864538,47.679628 87.062453,48.637961 88.875,50.554581 C 90.624949,52.40879 91.499948,54.971288 91.5,58.242081 C 91.499948,61.367115 90.583283,64.335862 88.75,67.148331 L 83.4375,67.148331 C 85.708287,64.585861 86.843703,61.721281 86.84375,58.554581 C 86.843703,57.054619 86.520787,55.669204 85.875,54.398331 C 85.166621,53.023373 83.916623,52.335874 82.125,52.335831 C 80.541626,52.335874 79.177044,53.190039 78.03125,54.898331 C 76.552047,57.148369 75.135381,60.252532 73.78125,64.210831 C 72.447884,68.106691 71.489552,71.856687 70.90625,75.460831 C 69.614554,83.106676 68.968721,88.419171 68.96875,91.398331 L 68.96875,95.179581 L 64.28125,95.179581")
+                    .Center()
+                    .Normalize()
+                    .Scale(30.0)
+                    .Rotate(GetAngle(index * 30 + 15 - 90))
+                    .Translate(zodiacCenter.X, zodiacCenter.Y)
+                    .ToBuilder();
+
+                yield return SvgBuild
+                    .Path(zodiacPath.Close())
+                    .AddSvgStyle("fill: #440044");
+            }
+        }
+
+        private double GetAngle(double localAngle) =>
+            HexagramOffset - localAngle;
     }
 }

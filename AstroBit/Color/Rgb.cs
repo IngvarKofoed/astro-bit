@@ -15,7 +15,10 @@ namespace AstroBit.Color
 
         public int G { get; }
 
-        public int B { get; }        
+        public int B { get; }
+
+        public static Rgb From(int r, int g, int b) =>
+            new Rgb(r, g, b);
 
         public static Rgb Parse(string color)
         {

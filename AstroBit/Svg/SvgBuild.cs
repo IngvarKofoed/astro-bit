@@ -72,6 +72,14 @@ namespace AstroBit.Svg
             return polygon;
         }
 
+        public static XElement Path(PathBuilder pathBuilder, string id = null)
+        {
+            var path = new XElement("path".SvgName());
+            path.AddAttribute("d", pathBuilder.ToString());
+            path.SafeAddIdAttribute(id);
+            return path;
+        }
+
         public static XElement Text(double x, double y, string text, string id = null)
         {
             var textElement = new XElement("text".SvgName(), text);
@@ -95,9 +103,6 @@ namespace AstroBit.Svg
             }
 
             return element;
-        }
-
-        private static string ToInvariantString(this double value) =>
-            value.ToString(CultureInfo.InvariantCulture);
+        }        
     }
 }
